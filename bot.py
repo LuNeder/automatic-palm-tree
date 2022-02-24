@@ -2,8 +2,16 @@
 
 import tweepy
 
-client = tweepy.Client("BEARER TOKEN")
-api = tweepy.API(client)
+consumer_key=""
+consumer_secret=""
+access_token=""
+access_token_secret=""
+
+client = tweepy.Client(
+    consumer_key=consumer_key, consumer_secret=consumer_secret,
+    access_token=access_token, access_token_secret=access_token_secret
+)
 
 
-api.update_status("Hello world")
+
+client.create_tweet(text="Hello world")
