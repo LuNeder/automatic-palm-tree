@@ -1,12 +1,6 @@
-atest
-atest
-atest
+batest
 atest
 atest1
-atest1
-atest1
-atest2
-atest2
-atest3
-2nd round of tests done
+atest
+3rd round of tests done
 EOF
