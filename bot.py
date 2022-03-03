@@ -17,11 +17,13 @@
 
 
 
-# //just testing for now probably shouldnt mind reading this lol
+# Work In Progress
 
-import tweepy
-import datetime
-from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler
+import tweepy # twitter client
+import datetime # To print the time in the logs
+from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler # To auto run periodically
+import os #for list files on lyrics dir 
+import random #to grab a random file on the lyrics dir
 
 
 # login
@@ -33,21 +35,27 @@ client = tweepy.Client(
 )
 
 # disk selector
-def music():
+file = open("current.txt", "r")
+def disk():
     date = str(datetime.datetime.now())
     print(date + " changing disk")
-
+    file.close()
+    newdisk = random.choice(os.listdir("/lyrics"))
+    src = "/lrcbot/lyrics" + newdisk
+    dst = "/lrcbot/current.txt"
+    os.replace(src, dst)
+    print("disk changed to " + newdisk)
+    file = open("current.txt", "r")
 
 # bot
-file = open("current.txt", "r")
 def bot():
     tweet = file.readline()
     if tweet == "EOF":
-        music()
+        disk()
         eof = True
     else:
         if tweet == "EOF\n":
-            music()
+            disk()
             eof = True
         else:
             eof = False
