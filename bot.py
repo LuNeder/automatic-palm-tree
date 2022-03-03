@@ -6,38 +6,61 @@ from apscheduler.schedulers.background import BackgroundScheduler, BlockingSched
 
 
 # login
-consumer_key=""
-consumer_secret=""
-access_token=""
-access_token_secret=""
+
 
 client = tweepy.Client(
     consumer_key=consumer_key, consumer_secret=consumer_secret,
     access_token=access_token, access_token_secret=access_token_secret
 )
 
-# cron
-scheduler = BlockingScheduler()
-scheduler.add_job(func=bot, trigger='interval', seconds=3600, id='lyricsbot')
-scheduler.start()
+# disk selector
+def music():
+    date = str(datetime.datetime.now())
+    print(date + " changing disk")
+
 
 # bot
+file = open("current.txt", "r")
 def bot():
-    file = open("current.txt", "r")
     tweet = file.readline()
-    try:
-        client.create_tweet(text=tweet)
-    except:
-        try:
-            print("error, trying to avoid duplicate")
-            tweet = tweet + ";"
-            client.create_tweet(text=tweet)
-        except:
-            print("error again, trying to avoid duplicate one last time")
-            try:
-                tweet = tweet + ";"
-                client.create_tweet(text=tweet)
-            except:
-                print("error when tweeting" + tweet)
+    if tweet == "EOF":
+        music()
+        eof = True
     else:
-        pass
+        if tweet == "EOF\n":
+            music()
+            eof = True
+        else:
+            eof = False
+
+    if eof == False:
+        try:
+            client.create_tweet(text=tweet)
+            date = str(datetime.datetime.now())
+            print(date + "=" + tweet)
+        except:
+            try:
+                print("error, trying to avoid duplicate")
+                tweet = tweet + "⠀"
+                client.create_tweet(text=tweet)
+                date = str(datetime.datetime.now())
+                print(date + "=" + tweet)
+            except:
+                print("error again, trying to avoid duplicate one last time")
+                try:
+                    tweet = tweet + "⠀"
+                    client.create_tweet(text=tweet)
+                    date = str(datetime.datetime.now())
+                    print(date + "=" + tweet)
+
+                except:
+                    date = str(datetime.datetime.now())
+                    print(date + "ERROR when tweeting = " + tweet)
+                else:
+                    pass
+
+
+# cron
+scheduler = BlockingScheduler()
+scheduler.add_job(func=bot, trigger='interval', seconds=12, id='lyricsbot')
+scheduler.start()
