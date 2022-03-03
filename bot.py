@@ -1,6 +1,7 @@
 # //just testing for now probably shouldnt mind reading this lol
 
 import tweepy
+import datetime
 from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler
 
 
@@ -22,4 +23,21 @@ scheduler.start()
 
 # bot
 def bot():
-    client.create_tweet(text="Hello world")
+    file = open("current.txt", "r")
+    tweet = file.readline()
+    try:
+        client.create_tweet(text=tweet)
+    except:
+        try:
+            print("error, trying to avoid duplicate")
+            tweet = tweet + ";"
+            client.create_tweet(text=tweet)
+        except:
+            print("error again, trying to avoid duplicate one last time")
+            try:
+                tweet = tweet + ";"
+                client.create_tweet(text=tweet)
+            except:
+                print("error when tweeting" + tweet)
+    else:
+        pass
