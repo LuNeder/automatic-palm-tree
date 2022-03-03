@@ -49,7 +49,10 @@ def disk():
 
 # bot
 def bot():
-    tweet = file.readline()
+    emus = ["🎶", "🎼", "🎵", "🎤", "🎧", "🎸", "🥁", "🎹", "🎺", "🎻", "🎷", "🪗", "🪘", "🪕"]
+    epoe = ["📑", "📰", "📝", "🖊", "✍️"]
+    ead = ["", "", "", ""]
+    tweet = file.readline().replace("\n", "")
     if tweet == "EOF":
         disk()
         eof = True
