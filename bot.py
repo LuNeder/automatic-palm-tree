@@ -22,43 +22,62 @@
 import tweepy # twitter client
 import datetime # To print the time in the logs
 from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler # To auto run periodically
-import os #for list files on lyrics dir 
+import os #for list files on lyrics dir
 import random #to grab a random file on the lyrics dir
 
 
 # login
-
+ 
 
 client = tweepy.Client(
     consumer_key=consumer_key, consumer_secret=consumer_secret,
     access_token=access_token, access_token_secret=access_token_secret
 )
 
+def fopen():
+    file = open("current.txt", "r")
+    return file
+
+file2 = fopen()
+eof = False
+
 # disk selector
-file = open("current.txt", "r")
 def disk():
     date = str(datetime.datetime.now())
     print(date + " changing disk")
-    file.close()
-    newdisk = random.choice(os.listdir("/lyrics"))
-    src = "/lrcbot/lyrics" + newdisk
-    dst = "/lrcbot/current.txt"
+    #file.close()
+    newdisk = random.choice(os.listdir("lyrics"))
+    src = "lyrics/" + newdisk
+    dst = "current.txt"
     os.replace(src, dst)
     print("disk changed to " + newdisk)
     file = open("current.txt", "r")
+    eof = True
+    return file
 
 # bot
 def bot():
+    if eof == True:
+        file2 = fopen()
+        file = file2
+    else:
+        file = file2
+
     emus = ["🎶", "🎼", "🎵", "🎤", "🎧", "🎸", "🥁", "🎹", "🎺", "🎻", "🎷", "🪗", "🪘", "🪕"]
-    epoe = ["📑", "📰", "📝", "🖊", "✍️"]
-    ead = ["", "", "", ""]
+    epoe = ["📝", "🖊", "✍️"]
+    ead = ["📑", "📰"]
     tweet = file.readline().replace("\n", "")
     if tweet == "EOF":
+        file.close()
         disk()
+        file = fopen()
+
         eof = True
     else:
         if tweet == "EOF\n":
+            file.close()
             disk()
+            file = fopen()
             eof = True
         else:
             eof = False
