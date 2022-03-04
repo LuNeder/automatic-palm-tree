@@ -21,7 +21,7 @@
 
 import tweepy # twitter client
 import datetime # To print the time in the logs
-from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler # To auto run periodically
+import time # To wait between tweets
 import os #for list files on lyrics dir
 import random #to grab a random file on the lyrics dir
 
@@ -34,9 +34,9 @@ client = tweepy.Client(
     access_token=access_token, access_token_secret=access_token_secret
 )
 
-def fopen():
-    file = open("current.txt", "r")
-    return file
+
+ file = open("current.txt", "r")
+
 
 file2 = fopen()
 eof = False
@@ -70,14 +70,14 @@ def bot():
     if tweet == "EOF":
         file.close()
         disk()
-        file = fopen()
+        
 
         eof = True
     else:
         if tweet == "EOF\n":
             file.close()
             disk()
-            file = fopen()
+            
             eof = True
         else:
             eof = False
