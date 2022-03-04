@@ -48,6 +48,23 @@ def disk():
     newdisk = random.choice(os.listdir("lyrics"))
     src = "lyrics/" + newdisk
     dst = "current.txt"
+    if "music" in newdisk:
+        type = open("type.txt", "w")
+        type.write("music")
+        type.close()
+        print("type: music")
+    elif "poem" in newdisk:
+        type = open("type.txt", "w")
+        type.write("poem")
+        type.close()
+        print("type: poem")
+    elif "ad" in newdisk:
+        type = open("type.txt", "w")
+        type.write("ad")
+        type.close()
+        print("type: ad")
+    else:
+        print("error detecting type") 
     os.replace(src, dst)
     print("disk changed to " + newdisk)
     file = open("current.txt", "r")
