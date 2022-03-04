@@ -27,7 +27,7 @@ import random #to grab a random file on the lyrics dir
 
 
 # login
- 
+
 
 client = tweepy.Client(
     consumer_key=consumer_key, consumer_secret=consumer_secret,
@@ -35,7 +35,7 @@ client = tweepy.Client(
 )
 
 
- file = open("current.txt", "r")
+file = open("current.txt", "r")
 
 
 
@@ -55,7 +55,7 @@ def disk():
 
 # bot
 while True:
-    
+
 
     emus = ["🎶", "🎼", "🎵", "🎤", "🎧", "🎸", "🥁", "🎹", "🎺", "🎻", "🎷", "🪗", "🪘", "🪕"]
     epoe = ["📝", "🖊", "✍️"]
@@ -63,12 +63,12 @@ while True:
     tweet = file.readline().replace("\n", "")
     if tweet == "EOF":
         file.close()
-        disk()
+        file = disk()
         eof = True
     else:
         if tweet == "EOF\n":
             file.close()
-            disk()
+            file = disk()
             eof = True
         else:
             eof = False
@@ -99,6 +99,3 @@ while True:
                 else:
                     pass
         time.sleep(12)
-
-
-
