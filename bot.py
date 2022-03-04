@@ -38,8 +38,7 @@ client = tweepy.Client(
  file = open("current.txt", "r")
 
 
-file2 = fopen()
-eof = False
+
 
 # disk selector
 def disk():
@@ -56,12 +55,8 @@ def disk():
     return file
 
 # bot
-def bot():
-    if eof == True:
-        file2 = fopen()
-        file = file2
-    else:
-        file = file2
+while True:
+    
 
     emus = ["🎶", "🎼", "🎵", "🎤", "🎧", "🎸", "🥁", "🎹", "🎺", "🎻", "🎷", "🪗", "🪘", "🪕"]
     epoe = ["📝", "🖊", "✍️"]
@@ -70,14 +65,11 @@ def bot():
     if tweet == "EOF":
         file.close()
         disk()
-        
-
         eof = True
     else:
         if tweet == "EOF\n":
             file.close()
             disk()
-            
             eof = True
         else:
             eof = False
@@ -107,9 +99,7 @@ def bot():
                     print(date + "ERROR when tweeting = " + tweet)
                 else:
                     pass
+        time.sleep()
 
 
-# cron
-scheduler = BlockingScheduler()
-scheduler.add_job(func=bot, trigger='interval', seconds=12, id='lyricsbot')
-scheduler.start()
+
