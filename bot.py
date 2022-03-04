@@ -51,7 +51,6 @@ def disk():
     os.replace(src, dst)
     print("disk changed to " + newdisk)
     file = open("current.txt", "r")
-    eof = True
     return file
 
 # bot
@@ -99,7 +98,7 @@ while True:
                     print(date + "ERROR when tweeting = " + tweet)
                 else:
                     pass
-        time.sleep()
+        time.sleep(12)
 
 
 
