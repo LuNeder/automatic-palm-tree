@@ -17,7 +17,6 @@
 
 
 
-# Work In Progress
 
 import tweepy # twitter client
 import datetime # To print the time in the logs
