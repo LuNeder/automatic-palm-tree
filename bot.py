@@ -40,33 +40,37 @@ file = open("current.txt", "r")
 
 
 
-# disk selector
-def disk():
+# disc selector
+def disc():
     date = str(datetime.datetime.now())
-    print(date + " changing disk")
+    print(date + " changing disc")
     #file.close()
-    newdisk = random.choice(os.listdir("lyrics"))
-    src = "lyrics/" + newdisk
+    try:
+        newdisc = random.choice(os.listdir("lyrics"))
+    except:
+        client.create_tweet(text="Error changing disc. There may be no new discs available or the next one is scratched.\nThe bot has abended. @1u4n4mh please check.")
+        print(str(datetime.datetime.now()) + "ERROR changing disc, bot will abend.")
+    src = "lyrics/" + newdisc
     dst = "current.txt"
-    if "music" in newdisk:
+    if "music" in newdisc:
         type = open("type.txt", "w")
         type.write("music")
         type.close()
         print("type: music")
-    elif "poem" in newdisk:
+    elif "poem" in newdisc:
         type = open("type.txt", "w")
         type.write("poem")
         type.close()
         print("type: poem")
-    elif "ad" in newdisk:
+    elif "ad" in newdisc:
         type = open("type.txt", "w")
         type.write("ad")
         type.close()
         print("type: ad")
     else:
-        print("error detecting type") 
+        print("error detecting type")
     os.replace(src, dst)
-    print("disk changed to " + newdisk)
+    print("disc changed to " + newdisc)
     file = open("current.txt", "r")
     return file
 
@@ -80,12 +84,12 @@ while True:
     tweet = file.readline().replace("\n", "")
     if tweet == "EOF":
         file.close()
-        file = disk()
+        file = disc()
         eof = True
     else:
         if tweet == "EOF\n":
             file.close()
-            file = disk()
+            file = disc()
             eof = True
         else:
             eof = False
