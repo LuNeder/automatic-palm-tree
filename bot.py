@@ -81,7 +81,23 @@ while True:
     emus = ["🎶", "🎼", "🎵", "🎤", "🎧", "🎸", "🥁", "🎹", "🎺", "🎻", "🎷", "🪗", "🪘", "🪕"]
     epoe = ["📝", "🖊", "✍️"]
     ead = ["📑", "📰"]
-    tweet = file.readline().replace("\n", "")
+    type = open("type.txt", "r")
+    type = type.readline().replace("\n", "")
+    if type == "music":
+        one = random.choice(emus)
+        two = random.choice(emus)
+    elif type == "poem":
+        one = random.choice(epoe)
+        two = random.choice(epoe)
+    elif type == "ad":
+        one = random.choice(ead)
+        two = random.choice(ead)
+    else:
+        print("no type?")
+        one = "  ?  "
+        two = "  ?  "
+
+    tweet = one + file.readline().replace("\n", "") + two
     if tweet == "EOF":
         file.close()
         file = disc()
