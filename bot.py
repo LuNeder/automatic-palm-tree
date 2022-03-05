@@ -27,7 +27,10 @@ import random #to grab a random file on the lyrics dir
 
 
 # login
-
+consumer_key = ""
+consumer_secret = ""
+access_token = ""
+access_token_secret = ""
 
 client = tweepy.Client(
     consumer_key=consumer_key, consumer_secret=consumer_secret,
@@ -48,8 +51,11 @@ def disc():
     try:
         newdisc = random.choice(os.listdir("lyrics"))
     except:
-        client.create_tweet(text="Error changing disc. There may be no new discs available or the next one is scratched.\nThe bot has abended. @1u4n4mh please check.")
         print(str(datetime.datetime.now()) + "ERROR changing disc, bot will abend.")
+        try:
+            client.create_tweet(text="Error changing disc. There may be no new discs available or the next one is scratched.\nThe bot has abended. @1u4n4mh please check.")
+        except:
+            client.create_tweet(text="Error changing disc. There may be no new discs available or the next one is scratched.\nThe bot has abended. @1u4n4mh please check.\n.")
     src = "lyrics/" + newdisc
     dst = "current.txt"
     if "music" in newdisc:
@@ -78,9 +84,9 @@ def disc():
 while True:
 
 
-    emus = ["🎶", "🎼", "🎵", "🎤", "🎧", "🎸", "🥁", "🎹", "🎺", "🎻", "🎷", "🪗", "🪘", "🪕"]
-    epoe = ["📝", "🖊", "✍️"]
-    ead = ["📑", "📰"]
+    emus = [" 🎶 ", " 🎼 ", " 🎵 ", " 🎤 ", " 🎧 ", " 🎸 ", " 🥁 ", " 🎹 ", " 🎺 ", " 🎻 ", " 🎷 ", " 🪗 ", " 🪘 ", " 🪕 "]
+    epoe = [" 📝 ", " 🖊 ", " ✍️ "]
+    ead = [" 📑 ", " 📰 "]
     type = open("type.txt", "r")
     type = type.readline().replace("\n", "")
     if type == "music":
@@ -98,17 +104,12 @@ while True:
         two = "  ?  "
 
     tweet = one + file.readline().replace("\n", "") + two
-    if tweet == "EOF":
+    if "EOF" in tweet:
         file.close()
         file = disc()
         eof = True
     else:
-        if tweet == "EOF\n":
-            file.close()
-            file = disc()
-            eof = True
-        else:
-            eof = False
+        eof = False
 
     if eof == False:
         try:
@@ -135,4 +136,4 @@ while True:
                     print(date + "ERROR when tweeting = " + tweet)
                 else:
                     pass
-        time.sleep(12)
+        time.sleep(1800) #waits 1800 seconds (30 mins)
